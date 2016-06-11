@@ -1,3 +1,5 @@
 ignore.me
 *.log
+!donotignorethis.log
 .DS_Store
+
