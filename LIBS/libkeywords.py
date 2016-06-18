@@ -32,7 +32,7 @@ if __name__ == "__main__":
         u"""Just for tests."""
         print "### This is a test of " + __file__
         testtxt = u"""
-		Java node.js C# django
+        Java node.js C# django
         """
         print "### Keywords search test"
         file_keywords = load_keywords('../../MYCORPUS/keywords.json')
