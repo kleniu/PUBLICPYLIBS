@@ -6,7 +6,19 @@ import codecs
 
 
 def load_keywords(file_name):
-    u"""Funkcja orczytuje JSON z definicją keywordów."""
+    u"""Function reads the JSON file with the definition of keywords."""
+    u"""The format of the keywords JSON file:
+        {
+            "keyword_group_name1": {
+                "keyword1": [ "reg_exp1_g1k1"
+                              "reg_exp2_g1k1",
+                              ...
+                          ]
+                ...
+            }
+            ...
+        }
+        """
     with codecs.open(file_name, 'r', encoding='UTF-8') as my_file:
         return json.load(my_file)
 
