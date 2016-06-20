@@ -18,7 +18,7 @@ def load_keywords(file_name):
             }
             ...
         }
-        """
+    """
     with codecs.open(file_name, 'r', encoding='UTF-8') as my_file:
         return json.load(my_file)
 
