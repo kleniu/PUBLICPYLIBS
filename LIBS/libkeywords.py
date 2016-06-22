@@ -39,14 +39,16 @@ def detect_keywords(mytext, keywords):
                     break
     return ret_val
 
+
+def testme():
+    u"""Just for tests."""
+    print "### This is a test of " + __file__
+    testtxt = u"""
+    Java node.js C# django
+    """
+    print "### Keywords search test"
+    file_keywords = load_keywords('../MYCORPUS/keywords.json')
+    print detect_keywords(testtxt, file_keywords)
+
 if __name__ == "__main__":
-    def testme():
-        u"""Just for tests."""
-        print "### This is a test of " + __file__
-        testtxt = u"""
-        Java node.js C# django
-        """
-        print "### Keywords search test"
-        file_keywords = load_keywords('../../MYCORPUS/keywords.json')
-        print detect_keywords(testtxt, file_keywords)
     testme()
