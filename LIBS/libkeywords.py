@@ -69,8 +69,9 @@ def detect_keywords(mytext, keywords):
 def testme():
     u"""Just for tests."""
     print "### This is a test of " + __file__
-    testtxt = u"""
+    testtxt = u""".NET
     Java node.js C# django
+    spring
     """
     print "### Keywords search test"
     keywords = load_keywords_def('./TEST/keywords.json')
