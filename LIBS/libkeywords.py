@@ -66,17 +66,26 @@ def detect_keywords(mytext, keywords):
     return ret_val
 
 
-def testme():
-    u"""Just for tests."""
-    print "### This is a test of " + __file__
-    testtxt = u""".NET
-    Java node.js C# django
-    spring
-    """
-    print "### Keywords search test"
-    keywords = load_keywords_def('./TEST/keywords.json')
-    # print_keywords_def(keywords)
-    print detect_keywords(testtxt, keywords)
+def print_keywords_csv(detected_keywords, delimiter=',', outen='utf-8'):
+    u"""Function formats detected keywords in CSV."""
+    first_line = True
+    ret_val = u""
+    for group_name in detected_keywords:
+        tags_list = detected_keywords[group_name]
+        for tag_name in tags_list:
+            if first_line:
+                first_line = False
+            else:
+                ret_val += u"\n"
+            ret_val += group_name + delimiter + tag_name
+    return ret_val.encode(outen)
 
-if __name__ == "__main__":
-    testme()
+
+def print_keywords_json(detected_keywords, prettify=False, outen='utf-8'):
+    u"""Function forrmats detected keywords in JSON."""
+    if prettify:
+        return json.dumps(detected_keywords,
+                          indent=4,
+                          ensure_ascii=False).encode(outen)
+    else:
+        return json.dumps(detected_keywords, ensure_ascii=False).encode(outen)
