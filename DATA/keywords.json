@@ -1,0 +1,24 @@
+{
+    "languages": {
+        "java": ["[jJ]ava",
+                 "JAVA"],
+        "javascript": ["[jJ]ava[sS]cript",
+                       "[jJ]ava [sS]cript",
+                       "JS"],
+        "c#": ["[sC]#",
+               "[cC]-[sS]harp",
+               "C-SHARP"]
+    },
+    "frameworks": {
+        "spring": ["[sS]pring",
+                   "SPRING"],
+        "django": ["[dD][jJ]ango",
+                   "DJANGO"],
+        ".net": ["\\.[nN][eE][tT]",
+                 "[dD]ot[nN]et",
+                 "DOTNET"],
+        "angularjs": ["[aA]ngular[jJ][sS]",
+                      "[aA]ngular\\.[jJ][sS]"
+                      ]
+    }
+}
