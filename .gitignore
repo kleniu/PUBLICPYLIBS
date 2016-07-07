@@ -3,3 +3,4 @@ ignore.me
 !donotignorethis.log
 .DS_Store
 *.pyc
+PRIVATE/
