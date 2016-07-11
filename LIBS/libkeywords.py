@@ -30,7 +30,8 @@ def load_keywords_def(file_name):
             reg_exp_obj_list = []
             for reg_exp_def in reg_exp_def_list:
                 # print group_name, keyword_name, reg_exp_def
-                reg_exp_obj = re.compile('.*' + reg_exp_def + '.*',
+                # reg_exp_obj = re.compile('.*' + reg_exp_def + '.*',
+                reg_exp_obj = re.compile(reg_exp_def,
                                          re.DOTALL)
                 reg_exp_obj_list.append(reg_exp_obj)
             group_def[keyword_name] = reg_exp_obj_list
@@ -58,10 +59,36 @@ def detect_keywords(mytext, keywords):
             reg_exp_obj_list = group_def[keyword_name]
             for reg_exp_obj in reg_exp_obj_list:
                 # print "pattern: ", reg_exp_obj.pattern
-                m = reg_exp_obj.match(mytext)
+                # m = reg_exp_obj.match(mytext)
+                m = reg_exp_obj.search(mytext)
                 if m:
                     # print "%s|%s" % (group_name, keyword_name)
                     ret_val[group_name].append(keyword_name)
+                    break
+    return ret_val
+
+
+def tag_keywords(mytext, keywords, tag):
+    u"""Function tags imput text."""
+    ret_val = mytext
+    start_tag = u"<" + tag + u">"
+    end_tag = u"</" + tag + u">"
+    for group_name in keywords:
+        group_def = keywords[group_name]
+        for keyword_name in group_def:
+            reg_exp_obj_list = group_def[keyword_name]
+            for reg_exp_obj in reg_exp_obj_list:
+                # print "pattern: ", reg_exp_obj.pattern
+                # m = reg_exp_obj.match(mytext)
+                m = reg_exp_obj.search(mytext)
+                if m:
+                    # print "\n%s|%s" % (group_name, keyword_name)
+                    matched_text = mytext[m.start(): m.end()]
+                    # print "Matched text: %s \ns=%d e=%d" % (matched_text,
+                    #                                         m.start(),
+                    #                                         m.end())
+                    replacement = start_tag + matched_text + end_tag
+                    ret_val = reg_exp_obj.sub(replacement, ret_val)
                     break
     return ret_val
 
