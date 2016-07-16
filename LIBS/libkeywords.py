@@ -71,8 +71,8 @@ def detect_keywords(mytext, keywords):
 def tag_keywords(mytext, keywords, tag):
     u"""Function tags imput text."""
     ret_val = mytext
-    start_tag = u"<" + tag + u">"
-    end_tag = u"</" + tag + u">"
+    start_tag = u" <" + tag + u"> "
+    end_tag = u" </" + tag + u"> "
     for group_name in keywords:
         group_def = keywords[group_name]
         for keyword_name in group_def:
@@ -89,7 +89,7 @@ def tag_keywords(mytext, keywords, tag):
                     #                                         m.end())
                     replacement = start_tag + matched_text + end_tag
                     ret_val = reg_exp_obj.sub(replacement, ret_val)
-                    break
+                    # break
     return ret_val
 
 
