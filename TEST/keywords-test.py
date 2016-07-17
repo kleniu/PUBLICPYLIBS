@@ -36,10 +36,17 @@ as spring and AngularJS."""
     print libkeywords.print_keywords_json(result)
     print "#-=END=-#"
 
-    print "\n### TEST 5 Taging text"
+    print "\n### TEST 5 JSON formated output"
     print "#-BEGIN-#"
-    tagged_text = libkeywords.tag_keywords(testtxt, keywords, "GREEN")
-    print tagged_text.encode('utf-8')
+    print libkeywords.tag_keywords(u".Net python this is text with java C#",
+                                   keywords, "[", "]")
+    print "#-=END=-#"
+
+    print "\n### TEST 6 Taging text"
+    print "#-BEGIN-#"
+    tagged_text = libkeywords.tag_keywords(testtxt, keywords,
+                                           "<GREEN>", "</GREEN>")
+    # print tagged_text.encode('utf-8')
     libfprint.ctaggedprint(tagged_text)
     print "#-=END=-#"
 

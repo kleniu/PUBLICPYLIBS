@@ -68,11 +68,34 @@ def detect_keywords(mytext, keywords):
     return ret_val
 
 
-def tag_keywords(mytext, keywords, tag):
-    u"""Function tags imput text."""
-    ret_val = mytext
-    start_tag = u" <" + tag + u"> "
-    end_tag = u" </" + tag + u"> "
+def _tag_on_marker(mytext, marker, stag, etag):
+    u"""Function tags text based on marker."""
+    ret_val = u""
+    if len(marker) > 0:
+        # check the first char
+        if marker[0] == '|':
+            ret_val = stag
+        ret_val += mytext[0]
+        # now check rest of the marker string
+        prev_marker_char = marker[0]
+        for index in range(1, len(marker)):
+            if marker[index] == "|" and prev_marker_char == ".":
+                ret_val += stag
+            if marker[index] == "." and prev_marker_char == "|":
+                ret_val += etag
+            ret_val += mytext[index]
+            prev_marker_char = marker[index]
+        # check the last charakter
+        if marker[-1] == '|':
+            ret_val += etag
+
+    return ret_val
+
+
+def _create_marker(mytext, keywords):
+    u"""Function detects imput text."""
+    ret_val = u"".ljust(len(mytext), '.')
+    # print ret_val
     for group_name in keywords:
         group_def = keywords[group_name]
         for keyword_name in group_def:
@@ -87,9 +110,22 @@ def tag_keywords(mytext, keywords, tag):
                     # print "Matched text: %s \ns=%d e=%d" % (matched_text,
                     #                                         m.start(),
                     #                                         m.end())
-                    replacement = start_tag + matched_text + end_tag
-                    ret_val = reg_exp_obj.sub(replacement, ret_val)
+                    marker = u"".ljust(len(matched_text), '|')
+                    ret_val = ret_val[:m.start()] + \
+                        marker + \
+                        ret_val[m.end():]
                     # break
+    return ret_val
+
+
+def tag_keywords(mytext, keywords, stag, etag):
+    u"""Function tags input text."""
+    ret_val = u""
+    marker = _create_marker(mytext, keywords)
+    # print mytext
+    # print marker
+    ret_val = _tag_on_marker(mytext, marker, stag, etag)
+    # print ret_val
     return ret_val
 
 
