@@ -50,7 +50,7 @@ def print_keywords_def(keywords):
 
 
 def detect_keywords(mytext, keywords):
-    u"""Function checks if keywords has been found in the text."""
+    u"""Function checks if keyword has been found in the text."""
     ret_val = {}
     for group_name in keywords:
         group_def = keywords[group_name]
