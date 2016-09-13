@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
 u"""The utility to detect language in text provided in stdin
-
-DO NOT forget to export PYTHONPATH with directory
-containing libkeywords.py before you run this script
 """
 import sys
 import os
