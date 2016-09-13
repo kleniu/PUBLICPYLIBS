@@ -36,7 +36,7 @@ as spring and AngularJS."""
     print libkeywords.print_keywords_json(result)
     print "#-=END=-#"
 
-    print "\n### TEST 5 JSON formated output"
+    print "\n### TEST 5 tagging test"
     print "#-BEGIN-#"
     print libkeywords.tag_keywords(u".Net python this is text with java C#",
                                    keywords, "[", "]")
