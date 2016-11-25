@@ -53,7 +53,7 @@ def main():
         print_usage()
         print "EMPTY keywords definition file name! Check -d option."
         sys.exit(1)
-    elif fmt != u"json" and fmt != u"csv":
+    elif fmt != u"json" or fmt != u"csv":
         print_usage()
         print "BAD format! Check -f option."
         sys.exit(1)

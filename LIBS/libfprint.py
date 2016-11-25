@@ -123,7 +123,7 @@ def carray(data, enc="UTF-8"):
     u"""Function returns formated array ready to print."""
     row_sizes, col_sizes = _calasize(data)
     #  print "row_sizes", row_sizes, "col_sizes", col_sizes
-    # now we are ready to format array to be dizplayed
+    # now we are ready to format array to be displayed
     ret_val = _make_sep(col_sizes)
     for row_index, row_size in enumerate(row_sizes):
         for cell_line in range(row_size):

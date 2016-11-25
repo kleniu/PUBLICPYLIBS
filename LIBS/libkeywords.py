@@ -4,9 +4,27 @@ u"""The first lib."""
 import json
 import codecs
 import re
+import libformatconv as lfc
 
 
-def load_keywords_def(file_name):
+def _compile_regexp(keywords):
+    u"""Function compiles regexp and adds it to the dictionary"""
+    for group_name, group_def in keywords.iteritems():
+        for keyword_name, reg_exp_def_list in group_def.iteritems():
+            reg_exp_obj_list = []
+            for reg_exp_def in reg_exp_def_list:
+                # print group_name, keyword_name, reg_exp_def
+                # reg_exp_obj = re.compile('.*' + reg_exp_def + '.*',
+                reg_exp_obj = re.compile(reg_exp_def,
+                                         re.DOTALL)
+                reg_exp_obj_list.append(reg_exp_obj)
+            # substitute reg_exp written in text with compiled version
+            group_def[keyword_name] = reg_exp_obj_list
+            # print group_def[keyword_name]
+    return keywords
+
+
+def load_keywords_json(file_name):
     u"""Function reads the JSON file with the definition of keywords."""
     u"""The format of the keywords JSON file:
         {
@@ -20,23 +38,39 @@ def load_keywords_def(file_name):
             ...
         }
     """
-    with codecs.open(file_name, 'r', encoding='UTF-8') as my_file:
-        keywords = json.load(my_file)
+    # with codecs.open(file_name, 'r', encoding='UTF-8') as my_file:
+    #    keywords = json.load(my_file)
+    keywords = lfc.json_load(file_name)
+
     # compile all regexps
-    for group_name in keywords:
-        group_def = keywords[group_name]
-        for keyword_name in group_def:
-            reg_exp_def_list = group_def[keyword_name]
-            reg_exp_obj_list = []
-            for reg_exp_def in reg_exp_def_list:
-                # print group_name, keyword_name, reg_exp_def
-                # reg_exp_obj = re.compile('.*' + reg_exp_def + '.*',
-                reg_exp_obj = re.compile(reg_exp_def,
-                                         re.DOTALL)
-                reg_exp_obj_list.append(reg_exp_obj)
-            group_def[keyword_name] = reg_exp_obj_list
-            # print group_def[keyword_name]
-    return keywords
+    keywords_compiled = _compile_regexp(keywords)
+
+    return keywords_compiled
+
+
+def load_keywords_yaml(file_name):
+    u"""Function reads the YAML file with the definition of keywords."""
+    u"""The format of the keywords YAML file:
+        "keyword_group_name1":
+            # keyword1 with assiciated regexps
+            "keyword1": 
+            - "reg_exp1_g1k1"
+            - "reg_exp2_g1k1"
+            "keyword2":
+            - "reg_exp1_g1k2"
+            - "reg_exp2_g1k2"
+        "keyword_group_name2":
+            "keyword1"
+            - "reg_exp1_g2k1"    
+            ...
+        ...
+    """
+    keywords = lfc.yaml_load(file_name)
+
+    # compile all regexps
+    keywords_compiled = _compile_regexp(keywords)
+    
+    return keywords_compiled
 
 
 def print_keywords_def(keywords):
@@ -129,12 +163,11 @@ def tag_keywords(mytext, keywords, stag, etag):
     return ret_val
 
 
-def print_keywords_csv(detected_keywords, delimiter=',', outen='utf-8'):
+def dump_keywords_csv(detected_keywords, delimiter=',', outen='utf-8'):
     u"""Function formats detected keywords in CSV."""
     first_line = True
     ret_val = u""
-    for group_name in detected_keywords:
-        tags_list = detected_keywords[group_name]
+    for group_name, tags_list in detected_keywords.iteritems():
         for tag_name in tags_list:
             if first_line:
                 first_line = False
@@ -144,11 +177,11 @@ def print_keywords_csv(detected_keywords, delimiter=',', outen='utf-8'):
     return ret_val.encode(outen)
 
 
-def print_keywords_json(detected_keywords, prettify=False, outen='utf-8'):
-    u"""Function forrmats detected keywords in JSON."""
-    if prettify:
-        return json.dumps(detected_keywords,
-                          indent=4,
-                          ensure_ascii=False).encode(outen)
-    else:
-        return json.dumps(detected_keywords, ensure_ascii=False).encode(outen)
+def dump_keywords_json(detected_keywords):
+    u"""Function dumps detected keywords in JSON."""
+    return lfc.json_dump(detected_keywords)
+
+
+def dump_keywords_yaml(detected_keywords):
+    u"""Function dumps detected keywords in JSON."""
+    return lfc.yaml_dump(detected_keywords)
