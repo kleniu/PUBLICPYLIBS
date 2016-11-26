@@ -18,7 +18,7 @@ def print_usage():
     print "   It can be any test."
     print "-d keyword_deffinition_file"
     print "   It can be any file in json or yaml format."
-    print "-of [json|csv|yaml]"
+    print "-o [json|csv|yaml]"
     print "   The format of the output data."
 
 
@@ -43,7 +43,7 @@ def do_it(txt, def_file, fmt, def_file_format):
 def main():
     u"""Main function."""
     try:
-        script_opts, script_args = getopt.getopt(sys.argv[1:], "t:d:of:")
+        script_opts, script_args = getopt.getopt(sys.argv[1:], "t:d:o:")
     except getopt.GetoptError as e:
         print(str(e))
         print_usage()
@@ -58,7 +58,7 @@ def main():
             txt = a
         elif o == '-d':
             def_file = a
-        elif o == '-f':
+        elif o == '-o':
             outfmt = a
             # print outfmt
     if def_file == u"":
