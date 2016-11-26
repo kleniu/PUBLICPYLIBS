@@ -73,6 +73,12 @@ def load_keywords_yaml(file_name):
     return keywords_compiled
 
 
+def detect_keywords_filedef_format(file_name):
+    u"""Function returns format of the keywords definition file format
+        which can be "yaml" or "json", in case of error it returns
+        zero lenght string"""
+    return lfc.detect_format(file_name)
+
 def print_keywords_def(keywords):
     u"""Function prints compiled reg_exps definitions."""
     for group_name in keywords:

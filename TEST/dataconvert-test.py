@@ -28,11 +28,12 @@ def testme():
     u"""Test function."""
     t.help()
 
-    print "######### Load JSON ##############"
-    jf = "../PRIVATE/keywords.json"
+    print "\n######### Load JSON ##############"
+    jf = "../DATA/keywords.json"
     jdata = t.json_load(jf)
     print "Data loaded from json file: " + jf
     # t.json_print(jdata)
+    # t.yaml_print(jdata)
     t.json_save(jdata, jf + "-DeleteMe")
     print "Data saved to json file: " + jf + "-DeleteMe"
     hf1 = hash_file(jf)
@@ -41,9 +42,10 @@ def testme():
         print ":) - json file hashes are the same"
     else:
         print ":( - json file hashes are different"
+    os.remove(jf + "-DeleteMe")
 
-    print "######### Load YAML ##############"
-    yf = "../PRIVATE/keywords.yaml"
+    print "\n######### Load YAML ##############"
+    yf = "../DATA/keywords.yaml"
     ydata = t.yaml_load(yf)
     print "Data loaded from yaml file: " + yf
     # t.yaml_print(ydata)
@@ -55,16 +57,24 @@ def testme():
         print ":) - yaml file hashes are the same"
     else:
         print ":( - yaml file hashes are different"
+    os.remove(yf + "-DeleteMe")
+    
 
-    print "######### Compare data ###########"
+    print "\n######### Compare data ###########"
     h1 = hash_dict(jdata)
     h2 = hash_dict(ydata)
     print "hash(data loaded from JSON) = " + h1
-    print "hash(data loaded from JAML) = " + h2
+    print "hash(data loaded from YAML) = " + h2
     if (h1 == h2):
         print ":) - hashes are the same"
     else:
         print ":( - hashes are different"
+
+    print "\n######### Detect format ###########"
+    print "detected format for json file     : >" + t.detect_format("../DATA/keywords.json") + "<" 
+    print "detected format for bad json file : >" + t.detect_format("../DATA/bad_keywords.json") + "<"
+    print "detected format for yaml file     : >" + t.detect_format("../DATA/keywords.yaml") + "<" 
+    print "detected format for bad yaml file : >" + t.detect_format("../DATA/bad_keywords.yaml") + "<"
 
 
 if __name__ == "__main__":
